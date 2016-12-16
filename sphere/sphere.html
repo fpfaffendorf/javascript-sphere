@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <title>Sphere</title>
+  <link rel="stylesheet" type="text/css" href="css/sphere.css">
+  <script src="js/graphics3d.js"></script>
+</head>
+<body>
+
+  <!-- Canvas -->
+  <canvas id="myCanvas"></canvas> 
+
+  <script type="text/javascript">
+  
+    document.onreadystatechange = function() {
+  
+      // Set canvas width and height to full screen,
+      var myCanvas = document.getElementById("myCanvas");
+      myCanvas.width = document.body.clientWidth;
+      myCanvas.height = document.body.clientHeight;  
+    
+      // X and Y rotation angle (RAD)
+      var thitaX = -1;
+      var thitaY = .1;
+      // Field of view (RAD)
+      var fov = .7;
+
+      // Sphere aspect
+      var colorLatitude = [200, 50, 0];
+      var colorLongitude = [255, 0, 0];
+      var radius = 100;
+      var distancePoints = .01 // (RAD angle)
+      
+      // Class instantiation
+      var g = new Graphics3d("myCanvas", thitaX, thitaY, fov);
+      // Clear
+      g.clear(); 
+      // Draw Sphere
+      g.drawSphere(colorLatitude, colorLongitude, radius, distancePoints);    
+          
+    }
+        
+  </script>
+  
+</body>
+</html>
+
