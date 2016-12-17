@@ -100,7 +100,7 @@ var Graphics3d = function(canvasId, theta, phi, fov, solid)
     }
 
     // Draw a sphere in the center of the screen with the given radius and distance between points
-    this.drawSphere = function(colorLatitude, colorLongitude, radius, distancePoints)
+    this.drawSphere = function(colorLatitude, colorLongitude, radius, distancePoints, latitudeSegments, longitudeSegments)
     {
 
         // This method might be improved by drawing both latitude and longitude lines at the same time
@@ -108,7 +108,7 @@ var Graphics3d = function(canvasId, theta, phi, fov, solid)
         // done to draw the sphere.
     
         // Draw Latitude Lines
-        for (var theta = 0; theta < Math.PI; theta += Math.PI / 18)
+        for (var theta = 0; theta < Math.PI; theta += Math.PI / latitudeSegments)
         {
             var x = radius * Math.sin(theta);
             var y = radius * Math.cos(theta);
@@ -125,23 +125,18 @@ var Graphics3d = function(canvasId, theta, phi, fov, solid)
         }
 
         // Draw Longitude Lines
-        for (var phi = 0; phi < Math.PI - .1; phi += Math.PI / 25)
+        for (var phi = 0; phi < Math.PI - .01; phi += Math.PI / longitudeSegments)
         {
             var x = radius * Math.cos(phi);
             var z = radius * -1 * Math.sin(phi);
             for (var theta = 0; theta < 2 * Math.PI; theta += distancePoints)
             {
-                // Don't draw polar lines
-                if (((theta > 0.174) && (theta < 2.967)) ||
-                    ((theta > 3.316) && (theta < 6.108)))
-                {
-                    this.drawPointCartesian(
-                            colorLongitude,
-                            Math.sin(theta) * x,
-                            radius * Math.cos(theta),
-                            Math.sin(theta) * z
-                        );
-                }
+              this.drawPointCartesian(
+                      colorLongitude,
+                      Math.sin(theta) * x,
+                      radius * Math.cos(theta),
+                      Math.sin(theta) * z
+                  );
             }
         }
 

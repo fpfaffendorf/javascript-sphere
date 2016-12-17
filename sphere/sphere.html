@@ -21,22 +21,25 @@
     
       // X and Y rotation angle (RAD)
       var thitaX = -1;
-      var thitaY = .1;
+      var thitaY = 0;
       // Field of view (RAD)
       var fov = .7;
+      var solid = true;
 
       // Sphere aspect
       var colorLatitude = [200, 50, 0];
       var colorLongitude = [255, 0, 0];
       var radius = 100;
       var distancePoints = .01 // (RAD angle)
+      var latitudeSegments = 20;
+      var longitudeSegments = 20;
       
       // Class instantiation
-      var g = new Graphics3d("myCanvas", thitaX, thitaY, fov, true);
+      var g = new Graphics3d("myCanvas", thitaX, thitaY, fov, solid);
       // Clear
       g.clear(); 
       // Draw Sphere
-      g.drawSphere(colorLatitude, colorLongitude, radius, distancePoints);    
+      g.drawSphere(colorLatitude, colorLongitude, radius, distancePoints, latitudeSegments, longitudeSegments);    
           
     }
         
