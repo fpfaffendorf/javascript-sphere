@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Graphics3d Class Definition
 // --------------------------------------------------------------------------------------
-var Graphics3d = function(canvasId, thitaX, thitaY, fov)
+var Graphics3d = function(canvasId, theta, phi, fov, solid)
 {
 
     // Canvas
@@ -9,28 +9,29 @@ var Graphics3d = function(canvasId, thitaX, thitaY, fov)
     this.context = this.canvas.getContext("2d");
 
     // Camera aspect
-    this.thitaX = thitaX;
-    this.thitaY = thitaY;
+    this.theta = theta;
+    this.phi = phi;
     this.aspect = 1;
     this.fov = fov;
     this.nearZ = 1;
     this.farZ = 100;
+    this.solid = solid;
 
     // Y axis rotation matrix
     this.rotateY = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
-    this.rotateY[0][0] = Math.cos(this.thitaY);
-    this.rotateY[0][2] = Math.sin(this.thitaY) * -1;
+    this.rotateY[0][0] = Math.cos(this.phi);
+    this.rotateY[0][2] = Math.sin(this.phi) * -1;
     this.rotateY[1][1] = 1;
-    this.rotateY[2][0] = Math.sin(this.thitaY);
-    this.rotateY[2][2] = Math.cos(this.thitaY);
+    this.rotateY[2][0] = Math.sin(this.phi);
+    this.rotateY[2][2] = Math.cos(this.phi);
 
     // X axis rotation matrix
     this.rotateX = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
     this.rotateX[0][0] = 1;
-    this.rotateX[1][1] = Math.cos(this.thitaX);
-    this.rotateX[1][2] = Math.sin(this.thitaX);
-    this.rotateX[2][1] = Math.sin(this.thitaX) * -1;
-    this.rotateX[2][2] = Math.cos(this.thitaX);
+    this.rotateX[1][1] = Math.cos(this.theta);
+    this.rotateX[1][2] = Math.sin(this.theta);
+    this.rotateX[2][1] = Math.sin(this.theta) * -1;
+    this.rotateX[2][2] = Math.cos(this.theta);
 
     // Camera matrix
     this.camera = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
@@ -73,7 +74,7 @@ var Graphics3d = function(canvasId, thitaX, thitaY, fov)
         z = r[0][2];
 
         // Solid Sphere
-        if (z < 0) return;
+        if ((this.solid) && (z < 0)) return;
 
         // ---------------------------------------------------------
         // Camera 
@@ -93,8 +94,8 @@ var Graphics3d = function(canvasId, thitaX, thitaY, fov)
         // Draw the pixel in the screen.
         // This method was much faster than the "putImageData" function
         // More info at: http://stackoverflow.com/questions/4899799/whats-the-best-way-to-set-a-single-pixel-in-an-html5-canvas
-        this.context.fillStyle = "rgba("+color[0]+","+color[1]+","+color[2]+",255)";
-        this.context.fillRect( parseInt(originX), parseInt(originY), 1, 1 );
+        this.context.fillStyle = "rgb("+color[0]+","+color[1]+","+color[2]+")";
+        this.context.fillRect(parseInt(originX), parseInt(originY), 1, 1);
 
     }
 
@@ -102,12 +103,16 @@ var Graphics3d = function(canvasId, thitaX, thitaY, fov)
     this.drawSphere = function(colorLatitude, colorLongitude, radius, distancePoints)
     {
 
+        // This method might be improved by drawing both latitude and longitude lines at the same time
+        // using only one for loop. Anyway I kept both so it's clearer to understand what has to be 
+        // done to draw the sphere.
+    
         // Draw Latitude Lines
-        for (var thita = 0; thita < Math.PI; thita += Math.PI / 18)
+        for (var theta = 0; theta < Math.PI; theta += Math.PI / 18)
         {
-            var x = radius * Math.sin(thita);
-            var y = radius * Math.cos(thita);
-            var z = radius * -1 * Math.sin(thita);
+            var x = radius * Math.sin(theta);
+            var y = radius * Math.cos(theta);
+            var z = radius * -1 * Math.sin(theta);
             for (var phi = 0; phi < 2 * Math.PI; phi += distancePoints)
             {
                 this.drawPointCartesian(
@@ -124,17 +129,17 @@ var Graphics3d = function(canvasId, thitaX, thitaY, fov)
         {
             var x = radius * Math.cos(phi);
             var z = radius * -1 * Math.sin(phi);
-            for (var thita = 0; thita < 2 * Math.PI; thita += distancePoints)
+            for (var theta = 0; theta < 2 * Math.PI; theta += distancePoints)
             {
                 // Don't draw polar lines
-                if (((thita > 0.174) && (thita < 2.967)) ||
-                    ((thita > 3.316) && (thita < 6.108)))
+                if (((theta > 0.174) && (theta < 2.967)) ||
+                    ((theta > 3.316) && (theta < 6.108)))
                 {
                     this.drawPointCartesian(
                             colorLongitude,
-                            Math.sin(thita) * x,
-                            radius * Math.cos(thita),
-                            Math.sin(thita) * z
+                            Math.sin(theta) * x,
+                            radius * Math.cos(theta),
+                            Math.sin(theta) * z
                         );
                 }
             }
