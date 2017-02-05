@@ -20,8 +20,8 @@
       myCanvas.height = document.body.clientHeight;  
     
       // X and Y rotation angle (RAD)
-      var thitaX = -1;
-      var thitaY = 0;
+      var theta = -1;
+      var phi = 0;
       // Field of view (RAD)
       var fov = .7;
       var solid = true;
@@ -35,7 +35,7 @@
       var longitudeSegments = 20;
       
       // Class instantiation
-      var g = new Graphics3d("myCanvas", thitaX, thitaY, fov, solid);
+      var g = new Graphics3d("myCanvas", theta, phi, fov, solid);
       // Clear
       g.clear(); 
       // Draw Sphere
@@ -47,4 +47,3 @@
   
 </body>
 </html>
-
