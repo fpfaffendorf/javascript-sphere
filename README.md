@@ -1,10 +1,11 @@
-# Federico Pfaffendorf
-(federicopfaffendorf.com.ar)
+# javascript-sphere
 
---
+Javascript class for drawing a sphere on an HTML5 canvas without any external dependency or library by using the Orthographic Projection Matrix technic.
 
-Welcome to my repository !
+# Screen shoot
 
---
+[![Javascript Sphere.](https://federicopfaffendorf.com.ar/etc/javascript-sphere.png)](https://federicopfaffendorf.com.ar/etc/javascript-sphere.png)
 
-**./sphere** Example on how to mathematically draw a sphere on an HTML5 Canvas using Javascript. Includes rotation and camera matrix concepts, matrix multiplication, spherical and cartesian coordinates and many other things. Tested on Chrome. HTML5 Code Validated.
+# Live demo
+
+http://www.federicopfaffendorf.com.ar/etc/javascript-sphere
